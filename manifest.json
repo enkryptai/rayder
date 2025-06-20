@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "RAYDER RedTeaming Assistant",
+  "version": "1.0",
+  "description": "Automated Red Teaming Assistant for Chatbots without APIs",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": [
+    "activeTab", 
+    "storage", 
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://api.dev.enkryptai.com/*",
+    "https://api.enkryptai.com/*"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_width": 450,
+    "default_height": 300
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "js/modules/config.js",
+        "js/modules/state.js", 
+        "js/modules/styles.js",
+        "js/modules/api.js",
+        "js/modules/ui-components.js",
+        "js/modules/event-handlers.js",
+        "js/modules/test-runner.js",
+        "js/content-modular.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": []
+} 
