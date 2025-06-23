@@ -40,16 +40,33 @@ window.EnkryptModules.TestRunner = class TestRunner {
       // Show launch status
       window.EnkryptModules.uiComponents.showStatus('🚀 Launching red team test...', 'info');
 
-      // Build API data
-      const apiData = this.buildApiData(
+      // First attempt: Try without proxy
+      console.log('🛡️ Attempting request without proxy...');
+      let apiData = this.buildApiData(
         testConfig.testName,
         testConfig.selectedTests,
         testConfig.additionalInstructions,
-        testConfig.customFields
+        testConfig.customFields,
+        false // useProxy = false
       );
 
-      // Make API request
-      const result = await window.EnkryptModules.apiManager.makeRedTeamRequest(apiData);
+      let result = await window.EnkryptModules.apiManager.makeRedTeamRequest(apiData);
+
+      // Check if we got a 500 error and should retry with proxy
+      if (!result.success && result.errorType === 'HTTP_ERROR' && result.status >= 500) {
+        window.EnkryptModules.uiComponents.showStatus('🔄 Retrying with proxy...', 'info');
+        
+        // Second attempt: Try with proxy
+        apiData = this.buildApiData(
+          testConfig.testName,
+          testConfig.selectedTests,
+          testConfig.additionalInstructions,
+          testConfig.customFields,
+          true // useProxy = true
+        );
+
+        result = await window.EnkryptModules.apiManager.makeRedTeamRequest(apiData);
+      }
 
       // Handle result
       const success = this.handleTestResult(result, testConfig);
@@ -307,7 +324,7 @@ window.EnkryptModules.TestRunner = class TestRunner {
   }
 
   // Build API data structure
-  buildApiData(testName, selectedTests, additionalInstructions, customFields) {
+  buildApiData(testName, selectedTests, additionalInstructions, customFields, useProxy = false) {
     const apiData = {
       "test_name": testName,
       "redteam_test_configurations": selectedTests,
@@ -323,6 +340,7 @@ window.EnkryptModules.TestRunner = class TestRunner {
           "model_source": "",
           "rate_per_min": 20,
           "system_prompt": additionalInstructions.trim(),
+          "use_proxy": useProxy,
           "endpoint": {
             "scheme": "https",
             "host": "api.together.xyz",
@@ -413,8 +431,8 @@ window.EnkryptModules.TestRunner = class TestRunner {
           userMessage = '📛 Test Name Already Exists';
           technicalDetails = 'A test with this name already exists. Please choose a different test name or modify the existing test name.';
         } else if (result.status >= 500) {
-          userMessage = '🔧 Server Error';
-          technicalDetails = `The Enkrypt AI server encountered an error (${result.status} ${result.statusText}). Please try again later.`;
+          userMessage = '🤖 Unable to Reach Your Chatbot';
+          technicalDetails = `We were unable to reach your chatbot (Server Error ${result.status}). Please add additional instructions to access the chatbot and try again.\n\nNote: If the website has bot detection, it may not work properly with automated testing.`;
         } else {
           userMessage = `❌ Request Failed (${result.status})`;
           technicalDetails = `HTTP ${result.status}: ${result.statusText}`;
