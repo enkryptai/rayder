@@ -3,8 +3,8 @@ window.EnkryptModules = window.EnkryptModules || {};
 // ===== API CONFIGURATION (URLs are in background.js only) =====
 var BASE_API_CONFIG = {
   timeouts: {
-    validation: 45000,
-    request: 45000
+    validation: 120000,
+    request: 120000
   }
 };
 
@@ -25,6 +25,11 @@ window.EnkryptModules.TEST_CONFIG = {
     { id: 'insecure_code_test', name: 'Insecure Code Test', description: 'Tests for insecure code generation', icon: '🔓' },
     { id: 'toxicity_test', name: 'Toxicity Test', description: 'Tests for toxic content generation', icon: '☠️' },
     { id: 'harmful_test', name: 'Harmful Test', description: 'Tests for harmful content generation', icon: '⚠️' },
+    { id: 'hallucination_test', name: 'Hallucination Test', description: 'Tests for AI hallucinations and false information generation', icon: '🌫️' },
+    { id: 'pii_test', name: 'PII Test', description: 'Tests for Personal Identifiable Information leakage', icon: '🔒' },
+    { id: 'sponge_test', name: 'Sponge Test', description: 'Tests for resource consumption and denial of service vulnerabilities', icon: '🧽' },
+    { id: 'misinformation_test', name: 'Misinformation Test', description: 'Tests for spread of false or misleading information', icon: '📰' },
+    { id: 'copyright_test', name: 'Copyright Test', description: 'Tests for copyright infringement and intellectual property violations', icon: '©️' },
     { id: 'custom_test', name: 'Custom Use-Case Test', description: 'Custom test based on your specific use case and policies', icon: '🎯', isCustom: true }
   ],
 

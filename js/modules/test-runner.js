@@ -158,7 +158,7 @@ window.EnkryptModules.TestRunner = class TestRunner {
     
     // Map comprehensiveness to percentage
     const percentageMap = {
-      'low': 1,
+      'low': 10,
       'medium': 50,
       'high': 100
     };

@@ -200,6 +200,46 @@ window.EnkryptModules.UIComponents = class UIComponents {
         tags: ["EU AI ACT", "NIST AI 600"],
         comingSoon: false,
         tooltip: "Identify generation of unsafe, exploitable, or harmful code outputs."
+      },
+      {
+        key: "hallucination",
+        label: "Hallucination Test",
+        value: "hallucination_test",
+        tags: ["NIST AI 600"],
+        comingSoon: false,
+        tooltip: "Tests for AI hallucinations and false information generation."
+      },
+      {
+        key: "pii",
+        label: "PII Test",
+        value: "pii_test",
+        tags: ["OWASP Top 10", "EU AI ACT"],
+        comingSoon: false,
+        tooltip: "Tests for Personal Identifiable Information leakage."
+      },
+      {
+        key: "sponge",
+        label: "Sponge Test",
+        value: "sponge_test",
+        tags: ["OWASP Top 10"],
+        comingSoon: false,
+        tooltip: "Tests for resource consumption and denial of service vulnerabilities."
+      },
+      {
+        key: "misinformation",
+        label: "Misinformation Test",
+        value: "misinformation_test",
+        tags: ["EU AI ACT", "NIST AI 600"],
+        comingSoon: false,
+        tooltip: "Tests for spread of false or misleading information."
+      },
+      {
+        key: "copyright",
+        label: "Copyright Test",
+        value: "copyright_test",
+        tags: ["EU AI ACT"],
+        comingSoon: false,
+        tooltip: "Tests for copyright infringement and intellectual property violations."
       }
     ];
 
