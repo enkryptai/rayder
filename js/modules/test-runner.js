@@ -239,7 +239,12 @@ window.EnkryptModules.TestRunner = class TestRunner {
     
     selectedTestTypes.forEach(testValue => {
       selectedTests[testValue] = {
-        "sample_percentage": samplePercentage,
+        "sample_percentage":
+          testValue === "cbrn_test" ? 3
+          : testValue === "bias_test" ? 5
+          : testValue === "toxicity_test" ? 3
+          : testValue === "insecure_code_test" ? 3
+          : 10,
         "attack_methods": this.getAttackMethodsForTestType(testValue, false)
       };
     });
