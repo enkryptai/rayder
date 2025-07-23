@@ -206,8 +206,7 @@ window.EnkryptModules.TestRunner = class TestRunner {
       return {
         "basic": ["basic"],
         "advanced": {
-          "static": ["encoding"],
-          "dynamic": ["iterative"]
+          "static": ["encoding"]
         }
       };
     }

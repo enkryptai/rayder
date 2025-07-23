@@ -827,23 +827,27 @@ addSpinnerAnimation() {
     popup.id = 'enkrypt-status-popup';
     popup.textContent = message;
     
-    // Base styles for popup
+    // Base styles for popup positioned at top right of main window
     const baseStyles = `
-      position: fixed !important;
-      top: 20px !important;
+      position: absolute !important;
+      top: 80px !important;
       right: 20px !important;
       padding: 16px 20px !important;
       border-radius: 12px !important;
       font-weight: 500 !important;
       font-family: inherit !important;
       font-size: 14px !important;
-      z-index: 2147483647 !important;
-      max-width: 400px !important;
+      z-index: 2147483649 !important;
+      max-width: 350px !important;
+      min-width: 250px !important;
+      text-align: left !important;
+      line-height: 1.4 !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
       border: 1px solid !important;
       transform: translateX(100%) !important;
       transition: all 0.3s ease !important;
       cursor: pointer !important;
+      word-wrap: break-word !important;
     `;
     
     if (type === 'success') {
@@ -866,15 +870,21 @@ addSpinnerAnimation() {
       `;
     }
     
-    // Add to body
-    document.body.appendChild(popup);
+    // Find the main extension container and add popup to it
+    const mainContainer = document.getElementById('enkrypt-redteam-ui');
+    if (mainContainer) {
+      mainContainer.appendChild(popup);
+    } else {
+      // Fallback to body if main container not found
+      document.body.appendChild(popup);
+    }
     
     // Animate in
     setTimeout(() => {
       popup.style.transform = 'translateX(0)';
     }, 10);
     
-    // Auto-hide after 3 seconds
+    // Auto-hide after 4 seconds
     setTimeout(() => {
       if (popup && popup.parentNode) {
         popup.style.transform = 'translateX(100%)';
@@ -884,7 +894,7 @@ addSpinnerAnimation() {
           }
         }, 300);
       }
-    }, 3000);
+    }, 4000);
     
     // Hide on click
     popup.addEventListener('click', () => {

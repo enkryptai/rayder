@@ -481,6 +481,17 @@ window.EnkryptModules.EventHandlers = class EventHandlers {
     if (checkbox && card) {
       
       if (isChecked) {
+        // Check if we're at the 3 test type limit before allowing selection
+        const currentStandardTests = document.querySelectorAll('.enkrypt-test-checkbox.checked').length;
+        const currentCustomTests = document.querySelectorAll('.enkrypt-custom-test-checkbox.checked').length;
+        const totalSelected = currentStandardTests + currentCustomTests;
+        
+        if (totalSelected >= 3) {
+          // Show limit message and prevent selection
+          window.EnkryptModules.uiComponents.showStatus('To run comprehensive tests with more than 3 test types and also access higher sample sizes, please contact the Enkrypt AI team', 'error');
+          return;
+        }
+        
         checkbox.classList.add('checked');
         card.classList.add('selected');
         
@@ -561,15 +572,40 @@ window.EnkryptModules.EventHandlers = class EventHandlers {
     
     const testTypeCards = document.querySelectorAll('.enkrypt-test-type-card');
     
-    testTypeCards.forEach((card, index) => {
-      const checkbox = card.querySelector('.enkrypt-test-checkbox');
-      const testValue = checkbox?.dataset.testValue;
+    if (selectAll) {
+      // When selecting all, respect the 3 test type limit
+      let selectedCount = 0;
+      const currentStandardTests = document.querySelectorAll('.enkrypt-test-checkbox.checked').length;
+      const currentCustomTests = document.querySelectorAll('.enkrypt-custom-test-checkbox.checked').length;
+      let totalSelected = currentStandardTests + currentCustomTests;
       
+      testTypeCards.forEach((card, index) => {
+        const checkbox = card.querySelector('.enkrypt-test-checkbox');
+        const testValue = checkbox?.dataset.testValue;
+        
+        if (checkbox && testValue && !checkbox.classList.contains('checked')) {
+          if (totalSelected < 3) {
+            this.toggleTestType(testValue, true);
+            totalSelected++;
+            selectedCount++;
+          }
+        }
+      });
       
-      if (checkbox && testValue) {
-        this.toggleTestType(testValue, selectAll);
+      if (selectedCount >= 3) {
+        window.EnkryptModules.uiComponents.showStatus('Maximum 3 test types selected. To run comprehensive tests with more test types, please contact the Enkrypt AI team', 'error');
       }
-    });
+    } else {
+      // When deselecting all, no limit needed
+      testTypeCards.forEach((card, index) => {
+        const checkbox = card.querySelector('.enkrypt-test-checkbox');
+        const testValue = checkbox?.dataset.testValue;
+        
+        if (checkbox && testValue) {
+          this.toggleTestType(testValue, false);
+        }
+      });
+    }
   }
 
   // Handle standard filters (NIST AI 600, OWASP Top 10, EU AI Act)
@@ -590,17 +626,42 @@ window.EnkryptModules.EventHandlers = class EventHandlers {
     const testTypeCards = document.querySelectorAll('.enkrypt-test-type-card');
     let matchedCards = 0;
     
-    testTypeCards.forEach((card, index) => {
-      const tags = card.dataset.tags;
-      const checkbox = card.querySelector('.enkrypt-test-checkbox');
-      const testValue = checkbox?.dataset.testValue;
+    if (isChecked) {
+      // When selecting by filter, respect the 3 test type limit
+      const currentStandardTests = document.querySelectorAll('.enkrypt-test-checkbox.checked').length;
+      const currentCustomTests = document.querySelectorAll('.enkrypt-custom-test-checkbox.checked').length;
+      let totalSelected = currentStandardTests + currentCustomTests;
       
+      testTypeCards.forEach((card, index) => {
+        const tags = card.dataset.tags;
+        const checkbox = card.querySelector('.enkrypt-test-checkbox');
+        const testValue = checkbox?.dataset.testValue;
+        
+        if (tags && tags.includes(targetTag) && checkbox && testValue && !checkbox.classList.contains('checked')) {
+          if (totalSelected < 3) {
+            this.toggleTestType(testValue, true);
+            totalSelected++;
+            matchedCards++;
+          }
+        }
+      });
       
-      if (tags && tags.includes(targetTag) && checkbox && testValue) {
-        this.toggleTestType(testValue, isChecked);
-        matchedCards++;
+      if (matchedCards > 0 && totalSelected >= 3) {
+        window.EnkryptModules.uiComponents.showStatus('Maximum 3 test types selected. To run comprehensive tests with more test types, please contact the Enkrypt AI team', 'error');
       }
-    });
+    } else {
+      // When deselecting by filter, no limit needed
+      testTypeCards.forEach((card, index) => {
+        const tags = card.dataset.tags;
+        const checkbox = card.querySelector('.enkrypt-test-checkbox');
+        const testValue = checkbox?.dataset.testValue;
+        
+        if (tags && tags.includes(targetTag) && checkbox && testValue) {
+          this.toggleTestType(testValue, false);
+          matchedCards++;
+        }
+      });
+    }
     
   }
 
@@ -818,6 +879,17 @@ window.EnkryptModules.EventHandlers = class EventHandlers {
     
     if (checkbox && customTestType) {      
       if (isChecked) {
+        // Check if we're at the 3 test type limit before allowing selection
+        const currentStandardTests = document.querySelectorAll('.enkrypt-test-checkbox.checked').length;
+        const currentCustomTests = document.querySelectorAll('.enkrypt-custom-test-checkbox.checked').length;
+        const totalSelected = currentStandardTests + currentCustomTests;
+        
+        if (totalSelected >= 3) {
+          // Show limit message and prevent selection
+          window.EnkryptModules.uiComponents.showStatus('To run comprehensive tests with more than 3 test types and also access higher sample sizes, please contact the Enkrypt AI team', 'error');
+          return;
+        }
+        
         checkbox.classList.add('checked');
         customTestType.classList.add('selected');
         
