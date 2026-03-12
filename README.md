@@ -112,28 +112,9 @@ Ensure safe, compliant AI deployments continuously in production. Monitor securi
 
 Contributions are welcome and greatly appreciated! Whether it's a bug report, new feature, or documentation improvement, every contribution helps make RAYDER better for the AI security community.
 
-### How to Contribute
+Please read our [Contributing Guide](CONTRIBUTING.md) for full details on the development setup, code style, and pull request process.
 
-1. **Fork the repository**
-   ```bash
-   git clone https://github.com/enkryptai/rayder.git
-   cd rayder
-   ```
-
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-3. **Make your changes** and commit with a clear message
-   ```bash
-   git commit -m "feat: add support for XYZ chatbot"
-   ```
-
-4. **Push to your fork and open a Pull Request**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+By submitting a contribution, you agree to our [Contributor License Agreement (CLA)](CLA.md).
 
 ### Ways to Contribute
 
@@ -142,15 +123,6 @@ Contributions are welcome and greatly appreciated! Whether it's a bug report, ne
 - **Chatbot Compatibility** — Help extend support to more AI chatbot platforms
 - **Documentation** — Improve guides, examples, or inline comments
 - **UI/UX Improvements** — Enhance the extension interface and reporting views
-
-### Guidelines
-
-- Follow existing code style and conventions
-- Keep pull requests focused on a single change
-- Add a clear description of what your PR does and why
-- Be respectful and constructive in all interactions — see our [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)
-
-This project is licensed under the [Apache 2.0 License](LICENSE) — your contributions will be released under the same license.
 
 ---
 
